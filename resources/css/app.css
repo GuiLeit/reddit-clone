@@ -5,46 +5,46 @@
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-@theme {
+/* Root CSS Variables for Theme Switching */
+:root {
     /* Font Families */
     --font-family-primary: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
     --font-family-secondary: 'Cal Sans', ui-sans-serif, system-ui, sans-serif;
-    --font-family-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
-    --font-family-satoshi: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
-    --font-family-cal-sans: 'Cal Sans', ui-sans-serif, system-ui, sans-serif;
-    --font-family-inter: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-family-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
 
-    /* Colors - Tailwind v4 format */
+    /* State Colors (same for both themes) */
     --color-helper-success: #03ad00;
     --color-helper-warning: #e0cf07;
     --color-helper-error: #e72323;
     --color-neutral-neutral: #208bff;
+}
 
-    /* Text Colors */
-    --color-high: #fdfdfd;
-    --color-medium: #909090;
-    --color-low: #7a7a7a;
-    --color-dark: #090909;
-    --color-light: #fdfdfd;
+/* Dark Theme (default) */
+:root,
+[data-theme='dark'] {
+    /* Text Colors - Dark Theme (from Figma) */
+    --color-text-high: #fdfdfd;
+    --color-text-medium: #4f4f4f;
+    --color-text-low: #7a7a7a;
+    --color-text-dark: #fdfdfd;
+    --color-text-light: #090909A;
 
-    /* Icon Colors */
+    /* Icon Colors - Dark Theme (from Figma) */
     --color-icon-high: #f8f8ff;
     --color-icon-medium: #737373;
     --color-icon-low: #7b7b7b;
-    --color-icon-dark: #090909;
+    --color-icon-dark: #090909A;
     --color-icon-light: #f8f8ff;
 
-    /* Outline Colors */
-    --color-outline-high: #999999;
+    /* Outline Colors - Dark Theme (from Figma) */
+    --color-outline-high: #99999f;
     --color-outline-medium: #7c7c83;
     --color-outline-low: #5e5e64;
     --color-outline-dark: #2c2c2d;
     --color-outline-light: #e8e8f1;
 
-    /* Elevation Colors */
-    --color-elevation-surface: #090909;
+    /* Elevation Colors - Dark Theme (from Figma) */
+    --color-elevation-surface: #09090a;
     --color-elevation-01dp: #0f0f10;
     --color-elevation-02dp: #131314;
     --color-elevation-03dp: #151516;
@@ -52,127 +52,174 @@
     --color-elevation-06dp: #1c1c1f;
 }
 
-/* Custom Utilities */
+/* Light Theme (based on Figma colors) */
+[data-theme='light'] {
+    /* Text Colors - Light Theme (inverted logic for light background) */
+    --color-text-high: #09090a;
+    --color-text-medium: #4f4f4f;
+    --color-text-low: #7a7a7a;
+    --color-text-dark: #09090a;
+    --color-text-light: #fdfdfd;
+
+    /* Icon Colors - Light Theme (darker for visibility on light) */
+    --color-icon-high: #09090a;
+    --color-icon-medium: #737373;
+    --color-icon-low: #7b7b7b;
+    --color-icon-dark: #09090a;
+    --color-icon-light: #f8f8ff;
+
+    /* Outline Colors - Light Theme (lighter borders) */
+    --color-outline-high: #99999f;
+    --color-outline-medium: #7c7c83;
+    --color-outline-low: #5e5e64;
+    --color-outline-dark: #e8e9f1;
+    --color-outline-light: #e8e9f1;
+
+    /* Elevation Colors - Light Theme (light backgrounds) */
+    --color-elevation-surface: #fdfdfd;
+    --color-elevation-01dp: #f8f8ff;
+    --color-elevation-02dp: #f3f4f6;
+    --color-elevation-03dp: #e8e8f1;
+    --color-elevation-04dp: #d1d5db;
+    --color-elevation-06dp: #b0b7c3;
+}
+
+/* Custom Utilities - Using CSS Variables for Theme Support */
 .text-text-high {
-    color: #fdfdfd;
+    color: var(--color-text-high);
 }
 .text-text-medium {
-    color: #909090;
+    color: var(--color-text-medium);
 }
 .text-text-low {
-    color: #7a7a7a;
+    color: var(--color-text-low);
 }
 .text-text-dark {
-    color: #090909;
+    color: var(--color-text-dark);
 }
 .text-text-light {
-    color: #fdfdfd;
+    color: var(--color-text-light);
 }
 
 .text-icon-high {
-    color: #f8f8ff;
+    color: var(--color-icon-high);
 }
 .text-icon-medium {
-    color: #737373;
+    color: var(--color-icon-medium);
 }
 .text-icon-low {
-    color: #7b7b7b;
+    color: var(--color-icon-low);
 }
 .text-icon-dark {
-    color: #090909;
+    color: var(--color-icon-dark);
 }
 .text-icon-light {
-    color: #f8f8ff;
+    color: var(--color-icon-light);
 }
 
 .text-helper-success {
-    color: #03ad00;
+    color: var(--color-helper-success);
 }
 .text-helper-warning {
-    color: #e0cf07;
+    color: var(--color-helper-warning);
 }
 .text-helper-error {
-    color: #e72323;
+    color: var(--color-helper-error);
+}
+.text-neutral-neutral {
+    color: var(--color-neutral-neutral);
 }
 
 .bg-helper-success {
-    background-color: #03ad00;
+    background-color: var(--color-helper-success);
 }
 .bg-helper-warning {
-    background-color: #e0cf07;
+    background-color: var(--color-helper-warning);
 }
 .bg-helper-error {
-    background-color: #e72323;
+    background-color: var(--color-helper-error);
+}
+.bg-neutral-neutral {
+    background-color: var(--color-neutral-neutral);
 }
 
 .bg-elevation-surface {
-    background-color: #090909;
+    background-color: var(--color-elevation-surface);
 }
 .bg-elevation-01dp {
-    background-color: #0f0f10;
+    background-color: var(--color-elevation-01dp);
 }
 .bg-elevation-02dp {
-    background-color: #131314;
+    background-color: var(--color-elevation-02dp);
 }
 .bg-elevation-03dp {
-    background-color: #151516;
+    background-color: var(--color-elevation-03dp);
 }
 .bg-elevation-04dp {
-    background-color: #181819;
+    background-color: var(--color-elevation-04dp);
 }
 .bg-elevation-06dp {
-    background-color: #1c1c1f;
+    background-color: var(--color-elevation-06dp);
 }
 
 .border-outline-high {
-    border-color: #999999;
+    border-color: var(--color-outline-high);
 }
 .border-outline-medium {
-    border-color: #7c7c83;
+    border-color: var(--color-outline-medium);
 }
 .border-outline-low {
-    border-color: #5e5e64;
+    border-color: var(--color-outline-low);
 }
 .border-outline-dark {
-    border-color: #2c2c2d;
+    border-color: var(--color-outline-dark);
 }
 .border-outline-light {
-    border-color: #e8e8f1;
+    border-color: var(--color-outline-light);
 }
 
 /* Hover utilities */
 .hover\:text-text-high:hover {
-    color: #fdfdfd;
+    color: var(--color-text-high);
+}
+.hover\:text-icon-high:hover {
+    color: var(--color-icon-high);
 }
 .hover\:text-helper-success:hover {
-    color: #03ad00;
+    color: var(--color-helper-success);
+}
+.hover\:text-helper-warning:hover {
+    color: var(--color-helper-warning);
 }
 .hover\:text-helper-error:hover {
-    color: #e72323;
+    color: var(--color-helper-error);
 }
 .hover\:bg-elevation-02dp:hover {
-    background-color: #131314;
+    background-color: var(--color-elevation-02dp);
 }
 .hover\:border-outline-medium:hover {
-    border-color: #7c7c83;
+    border-color: var(--color-outline-medium);
 }
 
 /* Font utilities */
 .font-satoshi {
-    font-family: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-family-primary);
 }
 .font-cal-sans {
-    font-family: 'Cal Sans', ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-family-secondary);
 }
-.font-inter {
-    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+.font-primary {
+    font-family: var(--font-family-primary);
+}
+.font-secondary {
+    font-family: var(--font-family-secondary);
 }
 
 .font-weight-medium {
     font-weight: 500;
 }
 .font-weight-regular {
-    font-weight: 600;
+    font-weight: 400;
 }
 .font-weight-bold {
     font-weight: 700;
