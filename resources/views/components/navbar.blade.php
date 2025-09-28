@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 ?>
 
+@props(['user' => null])
+
 <header class="bg-elevation-01dp border-outline-dark sticky top-0 z-50 border-b">
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-end">
@@ -39,21 +41,33 @@ declare(strict_types=1);
                     </svg>
                 </button>
 
-                <!-- User menu -->
-                <div class="relative">
-                    <button class="text-text-high hover:text-text-medium flex items-center space-x-2 transition-colors">
-                        <div class="bg-helper-success flex h-8 w-8 items-center justify-center rounded-full">
-                            <span class="text-text-dark text-sm font-medium">U</span>
-                        </div>
-                        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                                fill-rule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                clip-rule="evenodd"
-                            ></path>
-                        </svg>
-                    </button>
-                </div>
+                @if (is_null($user))
+                    <!-- Login button -->
+                    <a
+                        href="{{ route('login') }}"
+                        class="bg-helper-primary hover:bg-helper-primary-hover focus:ring-helper-primary-focus rounded-md px-3.5 py-2.5 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none"
+                    >
+                        Log in
+                    </a>
+                @else
+                    <!-- User menu -->
+                    <div class="relative">
+                        <button
+                            class="text-text-high hover:text-text-medium flex items-center space-x-2 transition-colors"
+                        >
+                            <div class="bg-helper-success flex h-8 w-8 items-center justify-center rounded-full">
+                                <span class="text-text-dark text-sm font-medium">U</span>
+                            </div>
+                            <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

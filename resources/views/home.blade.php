@@ -5,6 +5,9 @@ declare(strict_types=1);
 ?>
 
 <x-layouts.guest>
+    <!-- Top Nav -->
+    <x-navbar />
+
     <main class="flex">
         <!-- Left Sidebar -->
         <x-sidebar />

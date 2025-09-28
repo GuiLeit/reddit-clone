@@ -66,9 +66,6 @@ declare(strict_types=1);
         </script>
     </head>
     <body class="bg-elevation-surface text-text-high min-h-full">
-        <!-- Top Nav -->
-        <x-navbar />
-
         <!-- Content -->
         {{ $slot }}
     </body>
