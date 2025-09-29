@@ -69,4 +69,14 @@ final class User extends Authenticatable implements FilamentUser, HasAvatar, Has
             'password' => 'hashed',
         ];
     }
+
+    public function communitiesOwner()
+    {
+        return $this->hasMany(Community::class, 'creator_id');
+    }
+
+    public function communities()
+    {
+        return $this->belongsToMany(Community::class, 'community_members', 'user_id', 'community_id')->withTimestamps();
+    }
 }

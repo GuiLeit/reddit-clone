@@ -44,7 +44,7 @@ declare(strict_types=1);
                 @if (is_null($user))
                     <!-- Login button -->
                     <a
-                        href="{{ route('login') }}"
+                        href="{{ route('filament.admin.auth.login') }}"
                         class="bg-helper-primary hover:bg-helper-primary-hover focus:ring-helper-primary-focus rounded-md px-3.5 py-2.5 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none"
                     >
                         Log in

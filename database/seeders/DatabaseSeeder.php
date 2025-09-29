@@ -14,10 +14,16 @@ final class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        if (app()->isLocal()) {
+        if (app()->isLocal() && User::count() === 0) {
             User::factory()->admin()->create();
         }
 
         User::factory(10)->create();
+
+        // Seed communities and memberships
+        $this->call([
+            CommunitySeeder::class,
+            CommunityMemberSeeder::class,
+        ]);
     }
 }
