@@ -37,7 +37,8 @@ final class CommunityFactory extends Factory
             'name' => $name,
             'subforum' => $subforum,
             'description' => fake()->paragraph(),
-            'image' => fake()->optional()->imageUrl(640, 480, 'animals', true),
+            'image' => 'https://picsum.photos/200/300',
+            // 'image' => fake()->optional()->imageUrl(640, 480, 'animals', true),
             'creator_id' => User::factory(),
         ];
     }

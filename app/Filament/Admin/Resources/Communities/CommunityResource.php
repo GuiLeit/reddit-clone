@@ -7,6 +7,7 @@ namespace App\Filament\Admin\Resources\Communities;
 use App\Filament\Admin\Resources\Communities\Pages\CreateCommunity;
 use App\Filament\Admin\Resources\Communities\Pages\EditCommunity;
 use App\Filament\Admin\Resources\Communities\Pages\ListCommunities;
+use App\Filament\Admin\Resources\Communities\Pages\ManageCommunityMembers;
 use App\Filament\Admin\Resources\Communities\Schemas\CommunityForm;
 use App\Filament\Admin\Resources\Communities\Tables\CommunitiesTable;
 use App\Models\Community;
@@ -47,6 +48,7 @@ final class CommunityResource extends Resource
             'index' => ListCommunities::route('/'),
             'create' => CreateCommunity::route('/create'),
             'edit' => EditCommunity::route('/{record}/edit'),
+            'members' => ManageCommunityMembers::route('/{record}/members'),
         ];
     }
 

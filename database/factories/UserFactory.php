@@ -34,7 +34,7 @@ final class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => self::$password ??= Hash::make('password'),
-            'profile_picture' => null,
+            'profile_picture' => fake()->optional()->imageUrl(640, 480, 'people', true),
             'remember_token' => Str::random(10),
         ];
     }
