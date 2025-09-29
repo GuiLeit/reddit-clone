@@ -14,7 +14,7 @@ final class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        if (app()->isLocal() && User::count() === 0) {
+        if (app()->isLocal() && User::query()->count() === 0) {
             User::factory()->admin()->create();
         }
 

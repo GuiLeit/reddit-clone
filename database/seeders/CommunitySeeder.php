@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Community;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CommunitySeeder extends Seeder
+final class CommunitySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +16,7 @@ class CommunitySeeder extends Seeder
     public function run(): void
     {
         // Create users first if they don't exist
-        if (User::count() === 0) {
+        if (User::query()->count() === 0) {
             User::factory(10)->create();
         }
 
@@ -55,5 +56,3 @@ class CommunitySeeder extends Seeder
         $this->command->info('Communities seeded successfully!');
     }
 }
-
-

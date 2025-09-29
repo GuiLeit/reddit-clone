@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Community;
@@ -8,9 +10,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Community>
+ * @extends Factory<Community>
  */
-class CommunityFactory extends Factory
+final class CommunityFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
@@ -26,9 +28,11 @@ class CommunityFactory extends Factory
      */
     public function definition(): array
     {
-        $name = fake()->words(2, true);
-        $slug = Str::slug($name);
-        
+        do {
+            $name = fake()->words(2, true);
+            $slug = Str::slug($name);
+        } while (Community::query()->where('slug', $slug)->exists());
+
         return [
             'name' => $name,
             'slug' => $slug,
@@ -54,9 +58,9 @@ class CommunityFactory extends Factory
                 'Game Development',
                 'Cybersecurity',
                 'Open Source',
-                'Tech News'
+                'Tech News',
             ]),
-            'description' => 'A community for discussing ' . strtolower($attributes['name']) . ' topics and trends.',
+            'description' => 'A community for discussing '.mb_strtolower((string) $attributes['name']).' topics and trends.',
         ]);
     }
 
@@ -76,9 +80,9 @@ class CommunityFactory extends Factory
                 'Mobile Games',
                 'Retro Gaming',
                 'Game Reviews',
-                'Gaming News'
+                'Gaming News',
             ]),
-            'description' => 'A community for ' . strtolower($attributes['name']) . ' enthusiasts.',
+            'description' => 'A community for '.mb_strtolower((string) $attributes['name']).' enthusiasts.',
         ]);
     }
 
@@ -98,9 +102,9 @@ class CommunityFactory extends Factory
                 'Golf',
                 'Swimming',
                 'Running',
-                'Fitness'
+                'Fitness',
             ]),
-            'description' => 'A community for ' . strtolower($attributes['name']) . ' fans and athletes.',
+            'description' => 'A community for '.mb_strtolower((string) $attributes['name']).' fans and athletes.',
         ]);
     }
 }

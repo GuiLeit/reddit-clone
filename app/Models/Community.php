@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -7,9 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
-class Community extends Model
+final class Community extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -29,17 +32,17 @@ class Community extends Model
         return $this->belongsToMany(User::class, 'community_members', 'community_id', 'user_id')->withTimestamps();
     }
 
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::creating(function ($community) {
-            if (empty($community->slug)) {
+        self::creating(function ($community): void {
+            if (blank($community->slug)) {
                 $community->slug = Str::slug($community->name);
             }
         });
 
-        static::updating(function ($community) {
+        self::updating(function ($community): void {
             if ($community->isDirty('name')) {
                 $community->slug = Str::slug($community->name);
             }
