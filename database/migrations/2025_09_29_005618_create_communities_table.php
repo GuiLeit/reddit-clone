@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('communities', function (Blueprint $table): void {
             $table->id();
             $table->string('name');
-            $table->string('slug')->unique();
+            $table->string('subforum')->unique();
             $table->string('description')->nullable();
             $table->string('image')->nullable();
             $table->foreignId('creator_id')->constrained('users')->onDelete('cascade');

@@ -16,7 +16,7 @@ final class Community extends Model
 
     protected $fillable = [
         'name',
-        'slug',
+        'subforum',
         'description',
         'image',
         'creator_id',
@@ -37,14 +37,14 @@ final class Community extends Model
         parent::boot();
 
         self::creating(function ($community): void {
-            if (blank($community->slug)) {
-                $community->slug = Str::slug($community->name);
+            if (blank($community->subforum)) {
+                $community->subforum = Str::studly($community->name);
             }
         });
 
         self::updating(function ($community): void {
             if ($community->isDirty('name')) {
-                $community->slug = Str::slug($community->name);
+                $community->subforum = Str::studly($community->name);
             }
         });
     }

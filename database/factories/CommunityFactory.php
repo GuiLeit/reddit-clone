@@ -30,12 +30,12 @@ final class CommunityFactory extends Factory
     {
         do {
             $name = fake()->words(2, true);
-            $slug = Str::slug($name);
-        } while (Community::query()->where('slug', $slug)->exists());
+            $subforum = Str::studly($name);
+        } while (Community::query()->where('subforum', $subforum)->exists());
 
         return [
             'name' => $name,
-            'slug' => $slug,
+            'subforum' => $subforum,
             'description' => fake()->paragraph(),
             'image' => fake()->optional()->imageUrl(640, 480, 'animals', true),
             'creator_id' => User::factory(),
