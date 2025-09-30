@@ -78,4 +78,20 @@ final class Community extends Model
             }
         });
     }
+
+    // Accessor for image URL
+    protected function getImageUrlAttribute(): ?string
+    {
+        if (! $this->image) {
+            return null;
+        }
+
+        // If it's already a full URL, return as is
+        if (filter_var($this->image, FILTER_VALIDATE_URL)) {
+            return $this->image;
+        }
+
+        // Otherwise, generate the public URL
+        return asset('storage/'.$this->image);
+    }
 }

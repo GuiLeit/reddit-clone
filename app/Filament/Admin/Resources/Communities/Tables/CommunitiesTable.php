@@ -22,7 +22,7 @@ final class CommunitiesTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image')
+                ImageColumn::make('image_url')
                     ->label('Image')
                     ->circular()
                     ->size(40)

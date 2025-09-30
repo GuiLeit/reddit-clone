@@ -9,6 +9,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 final class CommunityController extends Controller
 {
@@ -30,6 +31,9 @@ final class CommunityController extends Controller
         $communities->getCollection()->transform(function ($community): Community {
             $community->displayTitle = '//c '.$community->subforum.' - '.$community->name;
             $community->userBelongs = Auth::check() && $community->userBelongs(Auth::user());
+            $community->image = $community->image
+                ? (filter_var($community->image, FILTER_VALIDATE_URL) ? $community->image : Storage::url($community->image))
+                : null;
 
             return $community;
         });
@@ -65,6 +69,9 @@ final class CommunityController extends Controller
     {
         $community->loadCount('members');
         $community->displayTitle = '//c '.$community->subforum.' - '.$community->name;
+        $community->image = $community->image
+            ? (filter_var($community->image, FILTER_VALIDATE_URL) ? $community->image : Storage::url($community->image))
+            : null;
 
         $posts = collect();
 

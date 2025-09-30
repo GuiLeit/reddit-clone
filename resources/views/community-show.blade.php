@@ -39,11 +39,11 @@ declare(strict_types=1);
                         </div>
 
                         <!-- Community Details -->
-                        <div>
+                        <div class="w-full">
                             <h1 class="font-primary font-weight-bold font-size-2xl text-text-high">
                                 {{ $community->displayTitle }}
                             </h1>
-                            <p class="font-primary font-weight-regular font-size-sm text-text-medium mt-1">
+                            <p class="font-primary font-weight-regular font-size-sm text-text-medium mt-1 break-words">
                                 {{ $community->description }}
                             </p>
 
@@ -73,25 +73,29 @@ declare(strict_types=1);
                         </div>
 
                         <!-- Action Buttons -->
-                        <div class="flex items-center space-x-3">
+                        <div class="flex flex-shrink-0 items-center space-x-3">
                             @if ($userIsMember)
                                 @if (! $userIsOwner)
                                     <form
                                         action="{{ route('community.leave', $community) }}"
                                         method="POST"
-                                        class="inline"
+                                        class="inline-block"
                                     >
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="button-secundary">Sair</button>
+                                        <button type="submit" class="button-secundary whitespace-nowrap">Sair</button>
                                     </form>
                                 @endif
 
-                                <button class="button-primary">Criar post</button>
+                                <button class="button-primary whitespace-nowrap">Criar post</button>
                             @else
-                                <form action="{{ route('community.join', $community) }}" method="POST" class="inline">
+                                <form
+                                    action="{{ route('community.join', $community) }}"
+                                    method="POST"
+                                    class="inline-block"
+                                >
                                     @csrf
-                                    <button type="submit" class="button-primary">Entrar</button>
+                                    <button type="submit" class="button-primary whitespace-nowrap">Entrar</button>
                                 </form>
                             @endif
                         </div>
