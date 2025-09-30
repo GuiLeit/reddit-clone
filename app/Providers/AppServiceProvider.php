@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Http\View\Composers\CommunityComposer;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Date;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,6 +38,7 @@ final class AppServiceProvider extends ServiceProvider
         $this->configureVite();
         $this->configureUrl();
         $this->configureHttp();
+        $this->configureViewComposers();
     }
 
     /**
@@ -85,6 +88,20 @@ final class AppServiceProvider extends ServiceProvider
     private function configureHttp(): void
     {
         Http::preventStrayRequests();
+    }
+
+    /**
+     * Configure view composers
+     */
+    private function configureViewComposers(): void
+    {
+        // Share community data with specific views
+        View::composer([
+            'home',
+            'community-all',
+            'community-show',
+            'components.sidebar',
+        ], CommunityComposer::class);
     }
 
     private function registerTelescope(): void

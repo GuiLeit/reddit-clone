@@ -61,22 +61,13 @@ declare(strict_types=1);
                         @endforeach
                     </nav>
 
-                    @if (! $showMyCommunities && $myCommunities->count() > 10)
+                    @if (! $showMyCommunities && $myCommunities->count() >= 10)
                         <div class="mt-4">
                             <a
-                                href="{{ request()->fullUrlWithQuery(['show_all' => 'true']) }}"
+                                href="{{ request()->fullUrlWithQuery(['show_my_communities' => 'true']) }}"
                                 class="text-neutral-neutral hover:text-neutral-neutral/80 text-sm font-medium transition-colors"
                             >
                                 Ver mais
-                            </a>
-                        </div>
-                    @elseif ($showMyCommunities && $myCommunities->count() > 10)
-                        <div class="mt-4">
-                            <a
-                                href="{{ request()->url() }}"
-                                class="text-neutral-neutral hover:text-neutral-neutral/80 text-sm font-medium transition-colors"
-                            >
-                                Ver menos
                             </a>
                         </div>
                     @endif

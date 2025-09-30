@@ -8,6 +8,7 @@ use App\Models\Community;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 final class CommunityController extends Controller
 {
@@ -16,39 +17,28 @@ final class CommunityController extends Controller
      */
     public function index(Request $request): View|Factory
     {
-        $showMyCommunities = $request->get('show_my_communities', false);
-
-        $myCommunities = auth()->check()
-            ? ($showMyCommunities
-                ? auth()->user()->communities()->get()
-                : auth()->user()->communities()->limit(10)->get())
-            : collect();
-
         // Paginate communities with 15 entries per page
         $communities = Community::query()->withCount('members')
             ->with(['members' => function ($query): void {
-                // Only load the current user's membership if authenticated
-                if (auth()->check()) {
-                    $query->where('user_id', auth()->id());
+                if (Auth::check()) {
+                    $query->where('user_id', Auth::id());
                 }
             }])
             ->orderBy('created_at', 'desc')
-            ->paginate(15);
+            ->paginate(10);
 
-        // Add display title and membership status to each community
         $communities->getCollection()->transform(function ($community): Community {
             $community->displayTitle = '//c '.$community->subforum.' - '.$community->name;
-
-            // Add membership flags for easy access in the view
-            $community->userBelongs = auth()->check() && $community->userBelongs(auth()->user());
+            $community->userBelongs = Auth::check() && $community->userBelongs(Auth::user());
 
             return $community;
         });
 
+        // Preserve query parameters in pagination links
+        $communities->appends($request->query());
+
         return view('community-all', [
             'communities' => $communities,
-            'myCommunities' => $myCommunities,
-            'showMyCommunities' => $showMyCommunities,
         ]);
     }
 
@@ -76,22 +66,11 @@ final class CommunityController extends Controller
         $community->loadCount('members');
         $community->displayTitle = '//c '.$community->subforum.' - '.$community->name;
 
-        $showMyCommunities = $request->get('show_my_communities', false);
-
-        // Get communities based on show_my_communities parameter
-        $myCommunities = auth()->check()
-            ? ($showMyCommunities
-                ? auth()->user()->communities()->get()
-                : auth()->user()->communities()->limit(10)->get())
-            : collect();
-
         $posts = collect();
 
         return view('community-show', [
             'community' => $community,
             'posts' => $posts,
-            'myCommunities' => $myCommunities,
-            'showMyCommunities' => $showMyCommunities,
             'userIsMember' => $community->userBelongs(auth()->user()),
             'userIsOwner' => $community->isOwnedBy(auth()->user()),
         ]);

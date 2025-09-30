@@ -12,17 +12,7 @@ final class HomeController extends Controller
 {
     public function index(Request $request): Factory|View
     {
-        $showMyCommunities = $request->get('show_my_communities', false);
-
-        $myCommunities = auth()->check()
-            ? ($showMyCommunities
-                ? auth()->user()->communities()->get()
-                : auth()->user()->communities()->limit(10)->get())
-            : collect();
-
-        return view('home', [
-            'myCommunities' => $myCommunities,
-            'showMyCommunities' => $showMyCommunities,
-        ]);
+        // The CommunityComposer will automatically provide $myCommunities and $showMyCommunities
+        return view('home');
     }
 }
