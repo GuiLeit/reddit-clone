@@ -39,6 +39,10 @@ final class PostsTable
                     ->sortable()
                     ->badge()
                     ->color('danger'),
+                TextColumn::make('created_at')
+                    ->label('Created')
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable(),
             ])
             ->filters([
                 //
