@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 ?>
 
-@props([
-    'username',
-])
-
-<section id="feed" class="bg-elevation-surface ml-64 min-h-screen w-full">
+<section id="feed">
     <div class="px-6 py-8">
         <!-- Page Title -->
         <div class="mb-8">
             <h1 class="font-secondary font-weight-regular text-text-high mb-5 text-3xl">
                 Olá,
-                <span class="text-indigo-600">{{ $username }}</span>
+                <span class="text-indigo-600">{{ auth()->user()->name }}</span>
             </h1>
             <p class="font-primary font-weight-regular font-size-xs text-text-medium">
                 Confira as estatísticas das comunidades que você segue

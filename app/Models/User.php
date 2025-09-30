@@ -57,14 +57,29 @@ final class User extends Authenticatable implements FilamentUser, HasAvatar, Has
         return $avatar?->getUrl();
     }
 
-    public function communitiesOwner()
+    public function communitiesOwned()
     {
         return $this->hasMany(Community::class, 'creator_id');
     }
 
+    public function communitiesMemberOf()
+    {
+        return $this->belongsToMany(Community::class, 'community_members', 'user_id', 'community_id')
+            ->withTimestamps();
+    }
+
     public function communities()
     {
-        return $this->belongsToMany(Community::class, 'community_members', 'user_id', 'community_id')->withTimestamps();
+        $memberCommunities = $this->belongsToMany(Community::class, 'community_members', 'user_id', 'community_id')
+            ->withTimestamps()
+            ->select('communities.*');
+
+        $createdCommunities = $this->hasMany(Community::class, 'creator_id')
+            ->select('communities.*');
+
+        return Community::query()
+            ->whereIn('id', $memberCommunities->pluck('id'))
+            ->orWhereIn('id', $createdCommunities->pluck('id'));
     }
 
     /**

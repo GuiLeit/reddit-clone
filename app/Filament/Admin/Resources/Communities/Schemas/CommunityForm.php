@@ -27,7 +27,7 @@ final class CommunityForm
                     ->maxLength(100)
                     ->reactive()
                     ->afterStateUpdated(fn ($state, callable $set) => $set('subforum', Str::studly($state)))
-                    ->prefix('r/'),
+                    ->prefix('c/'),
                 TextInput::make('description')
                     ->label('Description')
                     ->maxLength(255)

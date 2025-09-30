@@ -32,6 +32,26 @@ final class Community extends Model
         return $this->belongsToMany(User::class, 'community_members', 'community_id', 'user_id')->withTimestamps();
     }
 
+    // Helper method to check if user is a member
+    public function hasMember($user)
+    {
+        if (!$user) return false;
+        return $this->members->contains($user);
+    }
+
+    // Helper method to check if user is the owner
+    public function isOwnedBy($user)
+    {
+        if (!$user) return false;
+        return $this->creator_id === $user->id;
+    }
+
+    // Helper method to check if user belongs to community (member OR owner)
+    public function userBelongs($user)
+    {
+        return $this->hasMember($user) || $this->isOwnedBy($user);
+    }
+
     protected static function boot(): void
     {
         parent::boot();
