@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources\Posts;
 
 use App\Filament\Admin\Resources\Posts\Pages\CreatePost;
-use App\Filament\Admin\Resources\Posts\Pages\EditPost;
 use App\Filament\Admin\Resources\Posts\Pages\ListPosts;
+use App\Filament\Admin\Resources\Posts\Pages\ManagePostComments;
 use App\Filament\Admin\Resources\Posts\Schemas\PostForm;
 use App\Filament\Admin\Resources\Posts\Tables\PostsTable;
 use App\Models\Post;
@@ -44,7 +44,8 @@ final class PostResource extends Resource
         return [
             'index' => ListPosts::route('/'),
             'create' => CreatePost::route('/create'),
-            'edit' => EditPost::route('/{record}/edit'),
+            // 'edit' => EditPost::route('/{record}/edit'),
+            'comments' => ManagePostComments::route('/{record}/comments'),
         ];
     }
 }

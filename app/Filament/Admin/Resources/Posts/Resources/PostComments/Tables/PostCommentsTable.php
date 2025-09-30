@@ -2,33 +2,31 @@
 
 declare(strict_types=1);
 
-namespace App\Filament\Admin\Resources\Posts\Tables;
+namespace App\Filament\Admin\Resources\Posts\Resources\PostComments\Tables;
 
-use App\Filament\Admin\Resources\Posts\PostResource;
-use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-final class PostsTable
+final class PostCommentsTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->modifyQueryUsing(fn ($query) => $query->withCount(['upvotes', 'downvotes']))
-            ->recordUrl(null)
             ->columns([
-                TextColumn::make('title')
-                    ->label('Title')
-                    ->limit(35)
+                TextColumn::make('User')
+                    ->label('User')
+                    ->formatStateUsing(fn ($record) => $record->user->name)
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('community.subforum')
-                    ->label('Community')
+                TextColumn::make('body')
+                    ->label('Comment')
+                    ->limit(25)
                     ->searchable()
-                    ->sortable(),
+                    ->columnSpanFull(),
                 TextColumn::make('upvotes_count')
                     ->label('Upvotes')
                     ->sortable()
@@ -39,17 +37,16 @@ final class PostsTable
                     ->sortable()
                     ->badge()
                     ->color('danger'),
+                TextColumn::make('created_at')
+                    ->label('Created')
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                Action::make('Comments')
-                    ->icon('heroicon-o-users')
-                    ->color('info')
-                    ->url(fn ($record) => PostResource::getUrl('comments', ['record' => $record->id])),
                 DeleteAction::make(),
-                // EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Filament\Admin\Resources\Communities\Resources\CommunityMembers;
 
 use App\Filament\Admin\Resources\Communities\CommunityResource;
-use App\Filament\Admin\Resources\Communities\Resources\CommunityMembers\Pages\CreateCommunityMember;
-use App\Filament\Admin\Resources\Communities\Resources\CommunityMembers\Pages\EditCommunityMember;
 use App\Filament\Admin\Resources\Communities\Resources\CommunityMembers\Schemas\CommunityMemberForm;
 use App\Filament\Admin\Resources\Communities\Resources\CommunityMembers\Tables\CommunityMembersTable;
 use App\Models\CommunityMember;
@@ -44,8 +42,8 @@ final class CommunityMemberResource extends Resource
     public static function getPages(): array
     {
         return [
-            'create' => CreateCommunityMember::route('/create'),
-            'edit' => EditCommunityMember::route('/{record}/edit'),
+            // 'create' => CreateCommunityMember::route('/create'),
+            // 'edit' => EditCommunityMember::route('/{record}/edit'),
         ];
     }
 }
