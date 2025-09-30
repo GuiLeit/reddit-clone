@@ -62,6 +62,11 @@ final class Community extends Model
         return (bool) $this->isOwnedBy($user);
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
     protected static function boot(): void
     {
         parent::boot();

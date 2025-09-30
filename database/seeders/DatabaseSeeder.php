@@ -34,6 +34,7 @@ final class DatabaseSeeder extends Seeder
             CommunitySeeder::class,
             CommunityMemberSeeder::class,
             PostSeeder::class,
+            CommentSeeder::class,
         ]);
     }
 }
