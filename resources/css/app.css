@@ -273,7 +273,7 @@
 /* Button Styles */
 .button-primary {
     background-color: var(--color-indigo-primary);
-    color: var(--color-text-high);
+    color: #fdfdfd;
     font-family: var(--font-family-primary);
     padding: 0.5rem 1rem;
     border-radius: 0.375rem; /* Rounded corners */

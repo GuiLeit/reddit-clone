@@ -25,9 +25,9 @@ declare(strict_types=1);
                 <div class="px-6 py-8">
                     <!-- Page Title -->
                     <div class="mb-8">
-                        <h1 class="font-secondary font-weight-regular text-text-high mb-5 text-3xl">Communidades</h1>
+                        <h1 class="font-secondary font-weight-regular text-text-high mb-5 text-3xl">Comunidades</h1>
                         <p class="font-primary font-weight-regular font-size-xs text-text-medium">
-                            Confira as communidades disponíveis na plataforma
+                            Confira as comunidades disponíveis na plataforma
                         </p>
                     </div>
 
