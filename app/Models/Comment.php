@@ -39,4 +39,19 @@ final class Comment extends Model
     {
         return $this->hasMany(self::class, 'parent_id');
     }
+
+    public function votes()
+    {
+        return $this->hasMany(CommentVote::class);
+    }
+
+    public function upvotes()
+    {
+        return $this->hasMany(CommentVote::class)->where('type', 'upvote');
+    }
+
+    public function downvotes()
+    {
+        return $this->hasMany(CommentVote::class)->where('type', 'downvote');
+    }
 }
