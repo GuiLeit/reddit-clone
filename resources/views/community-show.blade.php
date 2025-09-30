@@ -78,24 +78,23 @@ declare(strict_types=1);
                         <div class="flex items-center space-x-3">
                             @if ($userIsMember)
                                 @if (! $userIsOwner)
-                                    <button
-                                        class="bg-elevation-03dp text-text-high font-primary font-weight-medium font-size-sm border-outline-medium hover:bg-elevation-04dp rounded-lg border px-4 py-2 transition-colors"
+                                    <form
+                                        action="{{ route('community.leave', $community) }}"
+                                        method="POST"
+                                        class="inline"
                                     >
-                                        Sair
-                                    </button>
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="button-secundary">Sair</button>
+                                    </form>
                                 @endif
 
-                                <button
-                                    class="bg-neutral-neutral font-primary font-weight-medium font-size-sm rounded-lg px-6 py-2 text-white transition-opacity hover:opacity-90"
-                                >
-                                    Criar post
-                                </button>
+                                <button class="button-primary">Criar post</button>
                             @else
-                                <button
-                                    class="font-primary font-weight-medium font-size-sm rounded-lg bg-blue-600 px-4 py-2 text-white transition-opacity hover:opacity-90"
-                                >
-                                    Entrar
-                                </button>
+                                <form action="{{ route('community.join', $community) }}" method="POST" class="inline">
+                                    @csrf
+                                    <button type="submit" class="button-primary">Entrar</button>
+                                </form>
                             @endif
                         </div>
                     </div>

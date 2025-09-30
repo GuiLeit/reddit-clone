@@ -17,6 +17,8 @@
     --color-helper-warning: #e0cf07;
     --color-helper-error: #e72323;
     --color-neutral-neutral: #208bff;
+    --color-indigo-primary: #4f39f6;
+    --color-indigo-primary-hover: #3d28e6; /* Darker version for hover */
 }
 
 /* Dark Theme (default) */
@@ -142,6 +144,12 @@
 .bg-neutral-neutral {
     background-color: var(--color-neutral-neutral);
 }
+.bg-indigo-primary {
+    background-color: var(--color-indigo-primary);
+}
+.bg-indigo-primary-hover {
+    background-color: var(--color-indigo-primary-hover);
+}
 
 .bg-elevation-surface {
     background-color: var(--color-elevation-surface);
@@ -260,4 +268,53 @@
 }
 .font-size-giant {
     font-size: 80px;
+}
+
+/* Button Styles */
+.button-primary {
+    background-color: var(--color-indigo-primary);
+    color: var(--color-text-high);
+    font-family: var(--font-family-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem; /* Rounded corners */
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.button-primary:hover {
+    background-color: var(--color-indigo-primary-hover);
+    box-shadow: 0 4px 12px rgba(79, 57, 246, 0.3); /* Subtle shadow */
+    cursor: pointer;
+}
+
+.button-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(79, 57, 246, 0.2);
+}
+
+.button-primary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 57, 246, 0.4); /* Focus ring */
+}
+
+.button-secundary {
+    background-color: transparent;
+    color: var(--color-text-high);
+    border: 1px solid var(--color-outline-dark);
+    font-family: var(--font-family-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem; /* Rounded corners */
+    font-size: 1rem;
+    font-weight: 600;
+    transition:
+        background-color 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.button-secundary:hover {
+    background-color: var(--color-elevation-04dp);
+    border-color: var(--color-outline-medium);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    cursor: pointer;
 }

@@ -12,7 +12,7 @@ declare(strict_types=1);
 ])
 
 <a
-    href="{{ route('community.show', ['subforum' => $subforum]) }}"
+    href="{{ route('community.show', ['community' => $subforum]) }}"
     class="text-text-medium hover:text-text-high hover:bg-elevation-02dp {{ $isActive ? 'bg-elevation-02dp text-text-high' : '' }} flex items-center space-x-3 rounded-lg px-3 py-2 transition-colors"
     title="{{ $subforum }} - {{ $title }}"
 >

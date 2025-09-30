@@ -32,6 +32,10 @@
     "lint-staged": {
         "*.{js,ts,json,yml,md,css,blade.php}": [
             "prettier --write"
+        ],
+        "*.php": [
+            "composer run test:pint",
+            "composer run test:rector"
         ]
     }
 }

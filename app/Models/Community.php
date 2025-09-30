@@ -35,21 +35,31 @@ final class Community extends Model
     // Helper method to check if user is a member
     public function hasMember($user)
     {
-        if (!$user) return false;
+        if (! $user) {
+            return false;
+        }
+
         return $this->members->contains($user);
     }
 
     // Helper method to check if user is the owner
     public function isOwnedBy($user)
     {
-        if (!$user) return false;
+        if (! $user) {
+            return false;
+        }
+
         return $this->creator_id === $user->id;
     }
 
     // Helper method to check if user belongs to community (member OR owner)
-    public function userBelongs($user)
+    public function userBelongs($user): bool
     {
-        return $this->hasMember($user) || $this->isOwnedBy($user);
+        if ($this->hasMember($user)) {
+            return true;
+        }
+
+        return (bool) $this->isOwnedBy($user);
     }
 
     protected static function boot(): void
