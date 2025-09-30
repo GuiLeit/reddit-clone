@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Community;
 use App\Models\Post;
+use App\Models\PostVote;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -19,9 +20,17 @@ final class PostSeeder extends Seeder
         $users = User::all();
         $communities = Community::all();
 
-        Post::factory(50)->create([
+        $post = Post::factory(50)->create([
             'user_id' => $users->random()->id,
             'community_id' => $communities->random()->id,
         ]);
+
+        $post->each(function (Post $post) use ($users): void {
+            $post->votes()->createMany(
+                PostVote::factory(10)->make([
+                    'user_id' => $users->random()->id,
+                ])->toArray()
+            );
+        });
     }
 }

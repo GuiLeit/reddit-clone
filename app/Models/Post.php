@@ -29,4 +29,9 @@ final class Post extends Model
     {
         return $this->belongsTo(Community::class);
     }
+
+    public function votes()
+    {
+        return $this->hasMany(PostVote::class);
+    }
 }
