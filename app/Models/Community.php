@@ -79,6 +79,17 @@ final class Community extends Model
         });
     }
 
+    // Query scope to filter communities where user belongs (member OR owner)
+    protected function scopeWhereUserBelongs($query, $userId)
+    {
+        return $query->where(function ($q) use ($userId): void {
+            $q->where('creator_id', $userId) // User is the creator/owner
+                ->orWhereHas('members', function ($memberQuery) use ($userId): void {
+                    $memberQuery->where('user_id', $userId); // User is a member
+                });
+        });
+    }
+
     // Accessor for image URL
     protected function getImageUrlAttribute(): ?string
     {

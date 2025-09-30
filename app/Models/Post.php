@@ -34,4 +34,14 @@ final class Post extends Model
     {
         return $this->hasMany(PostVote::class);
     }
+
+    public function upvotes()
+    {
+        return $this->hasMany(PostVote::class)->where('type', 'upvote');
+    }
+
+    public function downvotes()
+    {
+        return $this->hasMany(PostVote::class)->where('type', 'downvote');
+    }
 }
