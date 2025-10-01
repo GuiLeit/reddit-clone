@@ -37,5 +37,8 @@
             "composer run test:pint",
             "composer run test:rector"
         ]
+    },
+    "dependencies": {
+        "alpinejs": "^3.15.0"
     }
 }
