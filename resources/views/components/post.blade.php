@@ -7,14 +7,15 @@ declare(strict_types=1);
 @props([
     'slug' => null,
     'image' => null,
-    'prefix' => '//c',
-    'name' => 'comunidade',
+    'communityName' => 'comunidade',
+    'username' => 'usuário',
     'title' => 'Título do post',
     'body' => null,
     'upvotes' => 0,
     'comments' => 0,
     'postId' => null,
     'userVote' => null,
+    'createdAt' => now(),
 ])
 
 <article
@@ -31,11 +32,19 @@ declare(strict_types=1);
                     <img src="{{ $image }}" alt="Profile Picture" class="h-8 w-8 rounded-full" />
                 @else
                     <span class="text-text-dark text-sm font-medium">
-                        {{ strtoupper(substr($name, 0, 1)) }}
+                        {{ strtoupper(substr($communityName, 0, 1)) }}
                     </span>
                 @endif
             </div>
-            <div class="text-text-high text-sm font-medium">{{ $prefix }} {{ $name }}</div>
+            <div>
+                <div class="text-text-high text-sm font-medium">//c {{ $communityName }}</div>
+                <div class="text-text-medium text-sm">
+                    Posted by
+                    <strong>//u {{ $username }}</strong>
+                    •
+                    {{ $createdAt->diffForHumans() }}
+                </div>
+            </div>
         </div>
 
         <h3 class="text-text-high mb-3 line-clamp-2 text-lg font-semibold">{{ $title }}</h3>
@@ -44,7 +53,8 @@ declare(strict_types=1);
         <!-- Action Buttons -->
         <div class="relative z-20 flex items-center space-x-4">
             <!-- Comments -->
-            <button
+            <a
+                href="{{ route('post.show', $slug) }}"
                 class="text-icon-medium hover:text-text-high flex items-center space-x-1 transition-colors hover:cursor-pointer"
             >
                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,7 +66,7 @@ declare(strict_types=1);
                     ></path>
                 </svg>
                 <span class="text-sm">{{ $comments }}</span>
-            </button>
+            </a>
 
             <!-- Upvote -->
             <form
@@ -104,11 +114,12 @@ declare(strict_types=1);
             </form>
 
             <!-- Reply/Responder -->
-            <button
+            <a
+                href="{{ route('post.show', $slug) }}"
                 class="text-icon-medium hover:text-text-high flex items-center space-x-1 transition-colors hover:cursor-pointer"
             >
                 <span class="text-sm font-medium">Responder</span>
-            </button>
+            </a>
         </div>
     </div>
 </article>

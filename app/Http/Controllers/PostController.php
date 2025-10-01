@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 final class PostController extends Controller
 {
@@ -37,9 +40,47 @@ final class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): void
+    public function show(Request $request, Post $post): View|Factory
     {
-        //
+        $post->load(['user', 'community']);
+
+        // Fetch comments with their relationships
+        $comments = $post->comments()
+            ->whereNull('parent_id')
+            ->with([
+                'user',
+                'replies.user',
+                'votes',
+                'replies.votes',
+            ])
+            ->latest()
+            ->get();
+
+        // Load comment votes for authenticated users
+        if (Auth::check()) {
+            $post->load([
+                'votes' => function ($query): void {
+                    $query->where('user_id', Auth::id());
+                },
+            ]);
+            $post->userVote = $post->getUserVote();
+
+            // Load user votes for comments and replies
+            $comments->load([
+                'votes' => function ($query): void {
+                    $query->where('user_id', Auth::id());
+                },
+                'replies.votes' => function ($query): void {
+                    $query->where('user_id', Auth::id());
+                },
+            ]);
+        }
+
+        return view('post-show', [
+            'post' => $post,
+            'comments' => $comments,
+        ]);
+
     }
 
     /**

@@ -28,14 +28,15 @@ declare(strict_types=1);
                     <x-post
                         :slug="$post->slug"
                         :image="$post->community->image"
-                        :prefix="'//c'"
-                        :name="$post->community->subforum.' - '.$post->community->name"
+                        :communityName="$post->community->name"
+                        :username="$post->user->username"
                         :title="$post->title"
                         :body="$post->body"
                         :upvotes="$post->upvotes_count"
                         :comments="$post->comments_count"
                         :postId="$post->id"
                         :userVote="$post->userVote"
+                        :createdAt="$post->created_at"
                     />
                 @endforeach
 

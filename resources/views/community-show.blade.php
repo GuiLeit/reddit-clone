@@ -138,13 +138,14 @@ declare(strict_types=1);
                                 <x-post
                                     :slug="$post->slug"
                                     :image="$post->user->profile_picture"
-                                    :prefix="'//u'"
-                                    :name="$post->user->name"
+                                    :communityName="$post->community->name"
+                                    :username="$post->user->username"
                                     :title="$post->title"
                                     :body="$post->body"
                                     :upvotes="$post->upvotes_count"
                                     :comments="$post->comments_count"
                                     :userVote="$post->userVote"
+                                    :createdAt="$post->created_at"
                                 />
                             @endforeach
                         </div>
