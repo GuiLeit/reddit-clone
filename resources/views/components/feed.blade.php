@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 ?>
 
+@props([
+    'totalMembers' => null,
+    'totalPosts' => null,
+    'totalComments' => null,
+])
 <section id="feed">
     <div class="px-6 py-8">
         @auth
@@ -34,7 +39,7 @@ declare(strict_types=1);
                         </div>
                         <div>
                             <div class="text-text-medium mb-1 text-sm">Quantidade de usuários</div>
-                            <div class="text-text-high text-2xl font-bold">10000</div>
+                            <div class="text-text-high text-2xl font-bold">{{ $totalMembers }}</div>
                         </div>
                     </div>
                 </div>
@@ -53,7 +58,7 @@ declare(strict_types=1);
                         </div>
                         <div>
                             <div class="text-text-medium mb-1 text-sm">Quantidade de posts</div>
-                            <div class="text-text-high text-2xl font-bold">10000</div>
+                            <div class="text-text-high text-2xl font-bold">{{ $totalPosts }}</div>
                         </div>
                     </div>
                 </div>
@@ -72,7 +77,7 @@ declare(strict_types=1);
                         </div>
                         <div>
                             <div class="text-text-medium mb-1 text-sm">Quantidade de replies</div>
-                            <div class="text-text-high text-2xl font-bold">10000</div>
+                            <div class="text-text-high text-2xl font-bold">{{ $totalComments }}</div>
                         </div>
                     </div>
                 </div>
