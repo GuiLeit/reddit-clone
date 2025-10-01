@@ -31,4 +31,3 @@ Route::prefix('p')->group(function (): void {
         ->name('post.upvote');
 
 });
-

@@ -53,62 +53,69 @@ final class Post extends Model
 
     public function getUserVote($userId = null)
     {
-        if (!$userId) {
+        if (! $userId) {
             $userId = auth()->id();
         }
-        
-        if (!$userId) {
+
+        if (! $userId) {
             return null;
         }
 
         $vote = $this->votes()->where('user_id', $userId)->first();
+
         return $vote ? $vote->type : null;
     }
 
-    public function getScoreAttribute()
+    public function upvote(): void
+    {
+        $existingVote = PostVote::query()->where('post_id', $this->id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($existingVote && $existingVote->type === 'upvote') {
+            return;
+        }
+
+        if ($existingVote && $existingVote->type === 'downvote') {
+            $existingVote->update(['type' => 'upvote']);
+
+            return;
+        }
+
+        $this->votes()->create(['user_id' => auth()->id(), 'type' => 'upvote']);
+    }
+
+    public function downvote(): void
+    {
+        $existingVote = PostVote::query()->where('post_id', $this->id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($existingVote && $existingVote->type === 'downvote') {
+            return;
+        }
+
+        if ($existingVote && $existingVote->type === 'upvote') {
+            $existingVote->update(['type' => 'downvote']);
+
+            return;
+        }
+
+        $this->votes()->create(['user_id' => auth()->id(), 'type' => 'downvote']);
+    }
+
+    protected function getScoreAttribute(): int|float
     {
         return $this->upvotes()->count() - $this->downvotes()->count();
     }
 
-    public function getUpvoteCountAttribute()
+    protected function getUpvoteCountAttribute()
     {
         return $this->upvotes()->count();
     }
 
-    public function getDownvoteCountAttribute()
+    protected function getDownvoteCountAttribute()
     {
         return $this->downvotes()->count();
-    }
-
-    public function upvote()
-    {
-        $existingVote = PostVote::where('post_id', $this->id)
-            ->where('user_id', auth()->id())
-            ->first();
-
-        if ($existingVote && $existingVote->type === 'upvote') {
-            return;
-        } 
-        if ($existingVote && $existingVote->type === 'downvote') {
-            $existingVote->update(['type' => 'upvote']);
-            return;
-        }
-        $this->votes()->create(['user_id' => auth()->id(), 'type' => 'upvote']);
-    }
-
-    public function downvote()
-    {
-        $existingVote = PostVote::where('post_id', $this->id)
-            ->where('user_id', auth()->id())
-            ->first();
-
-        if ($existingVote && $existingVote->type === 'downvote') {
-            return;
-        } 
-        if ($existingVote && $existingVote->type === 'upvote') {
-            $existingVote->update(['type' => 'downvote']);
-            return;
-        }
-        $this->votes()->create(['user_id' => auth()->id(), 'type' => 'downvote']);
     }
 }

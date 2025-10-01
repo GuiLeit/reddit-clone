@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Community;
+use App\Services\PostService;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 final class CommunityController extends Controller
 {
+    public function __construct(
+        private readonly PostService $postService
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -31,7 +35,6 @@ final class CommunityController extends Controller
         $communities->getCollection()->transform(function ($community): Community {
             $community->displayTitle = '//c '.$community->subforum.' - '.$community->name;
             $community->userBelongs = Auth::check() && $community->userBelongs(Auth::user());
-            $community->image = $community->image;
             $community->posts_count = $community->posts()->count();
 
             return $community;
@@ -68,20 +71,9 @@ final class CommunityController extends Controller
     {
         $community->loadCount('members');
         $community->displayTitle = '//c '.$community->subforum.' - '.$community->name;
-        $community->image = $community->image;
         $community->posts_count = $community->posts()->count();
 
-        $posts = $community->posts()
-            ->with(['user', 'community', 'upvotes', 'comments'])
-            ->withCount('comments', 'upvotes')
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-
-        // Add user vote status to each post
-        $posts->getCollection()->transform(function ($post) {
-            $post->userVote = $post->getUserVote();
-            return $post;
-        });
+        $posts = $this->postService->getPostsFromCommunity($community, Auth::check() ? Auth::id() : null, 10);
 
         return view('community-show', [
             'community' => $community,

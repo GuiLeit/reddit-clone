@@ -15,9 +15,6 @@ declare(strict_types=1);
     'comments' => 0,
     'postId' => null,
     'userVote' => null,
-    //'upvote',
-    'downvote',
-    ornull,
 ])
 
 <article

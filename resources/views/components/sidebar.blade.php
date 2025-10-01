@@ -18,7 +18,7 @@ declare(strict_types=1);
         <nav class="mb-8 space-y-1">
             <a
                 href="{{ route('home') }}"
-                class="text-text-high bg-elevation-02dp flex items-center space-x-3 rounded-lg px-3 py-2"
+                class="{{ request()->routeIs('home') ? 'text-text-high bg-elevation-02dp' : 'text-text-medium hover:text-text-high hover:bg-elevation-02dp' }} flex items-center space-x-3 rounded-lg px-3 py-2"
             >
                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                     <path
@@ -30,7 +30,7 @@ declare(strict_types=1);
 
             <a
                 href="{{ route('community.all') }}"
-                class="text-text-medium hover:text-text-high hover:bg-elevation-02dp flex items-center space-x-3 rounded-lg px-3 py-2 transition-colors"
+                class="{{ request()->routeIs('community.all') ? 'text-text-high bg-elevation-02dp' : 'text-text-medium hover:text-text-high hover:bg-elevation-02dp' }} flex items-center space-x-3 rounded-lg px-3 py-2"
             >
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -41,6 +41,16 @@ declare(strict_types=1);
                     ></path>
                 </svg>
                 <span>Explorar comunidades</span>
+            </a>
+
+            <a
+                href="{{ route('filament.admin.resources.posts.create') }}"
+                class="text-text-medium hover:text-text-high hover:bg-elevation-02dp flex items-center space-x-3 rounded-lg px-3 py-2 transition-colors"
+            >
+                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span>Criar post</span>
             </a>
         </nav>
 

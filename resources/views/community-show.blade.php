@@ -104,7 +104,12 @@ declare(strict_types=1);
                                     </form>
                                 @endif
 
-                                <button class="button-primary whitespace-nowrap">Criar post</button>
+                                <a
+                                    href="{{ route('filament.admin.resources.posts.create') }}"
+                                    class="button-primary whitespace-nowrap"
+                                >
+                                    Criar post
+                                </a>
                             @else
                                 <form
                                     action="{{ route('community.join', $community) }}"
