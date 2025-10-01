@@ -5,10 +5,10 @@ declare(strict_types=1);
 ?>
 
 @props([
-    'community',
     'showMyCommunities' => false,
-    'posts' => collect(),
     'myCommunities' => collect(),
+    'community',
+    'posts' => collect(),
     'userIsMember' => false,
     'userIsOwner' => false,
 ])
@@ -56,6 +56,23 @@ declare(strict_types=1);
                                         />
                                     </svg>
                                     <span class="font-size-sm">{{ $community->members_count }} membros</span>
+                                </div>
+                                <div class="text-text-high flex items-center space-x-2">
+                                    <svg
+                                        class="h-4 w-4"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M7 7h10M7 11h10M7 15h10M5 3a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V7.828a2 2 0 00-.586-1.414l-4.828-4.828A2 2 0 0013.172 1H5z"
+                                        ></path>
+                                    </svg>
+                                    <span class="font-size-sm">{{ $community->posts_count }} posts</span>
                                 </div>
                                 <div class="text-text-high flex items-center space-x-2">
                                     <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
@@ -109,6 +126,30 @@ declare(strict_types=1);
                                 Veja todos os posts da comunidade
                             </h2>
                         </div>
+
+                        <!-- Posts List -->
+                        <div class="space-y-6">
+                            @foreach ($posts as $post)
+                                <x-post
+                                    :slug="$post->slug"
+                                    :image="$post->user->profile_picture"
+                                    :prefix="'//u'"
+                                    :name="$post->user->name"
+                                    :title="$post->title"
+                                    :body="$post->body"
+                                    :upvotes="$post->upvotes_count"
+                                    :comments="$post->comments_count"
+                                    :userVote="$post->userVote"
+                                />
+                            @endforeach
+                        </div>
+
+                        <!-- Pagination -->
+                        @if ($posts->hasPages())
+                            <div class="mt-8">
+                                {{ $posts->links() }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </section>

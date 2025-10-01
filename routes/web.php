@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -19,3 +20,15 @@ Route::prefix('c')->group(function (): void {
         ->middleware(['auth'])
         ->name('community.leave');
 });
+
+Route::prefix('p')->group(function (): void {
+    Route::get('/{post:slug}', [PostController::class, 'show'])->name('post.show');
+    Route::post('/downvote/{post:slug}', [PostController::class, 'downvote'])
+        ->middleware(['auth'])
+        ->name('post.downvote');
+    Route::post('/upvote/{post:slug}', [PostController::class, 'upvote'])
+        ->middleware(['auth'])
+        ->name('post.upvote');
+
+});
+

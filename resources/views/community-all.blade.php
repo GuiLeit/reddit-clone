@@ -88,7 +88,8 @@ declare(strict_types=1);
                                             {{ $community->description }}
                                         </p>
                                         <p class="font-size-xs text-text-medium mt-2">
-                                            {{ $community->members_count ?? 0 }} membros • Criado em
+                                            {{ $community->members_count ?? 0 }} membros •
+                                            {{ $community->posts_count ?? 0 }} posts • Criado em
                                             {{ $community->created_at->format('M j, Y') }}
                                         </p>
                                     </div>
