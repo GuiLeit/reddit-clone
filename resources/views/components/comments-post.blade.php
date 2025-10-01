@@ -23,7 +23,9 @@ declare(strict_types=1);
                     </span>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <span class="text-text-high font-medium">{{ $comment->user->name }}</span>
+                    <span class="text-text-high font-medium">
+                        //u {{ $comment->user->username }} - {{ $comment->user->name }}
+                    </span>
                     <span class="text-text-low">•</span>
                     <span class="text-text-medium text-sm">{{ $comment->created_at->diffForHumans() }}</span>
                 </div>

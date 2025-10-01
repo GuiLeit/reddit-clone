@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Models\Community;
 use App\Models\Post;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 final class PostController extends Controller
 {
@@ -24,17 +26,43 @@ final class PostController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): void
+    public function create(Request $request): View|Factory
     {
-        //
+        $communities = auth()->user()->communities()->get();
+        $selectedCommunity = null;
+
+        // Check if a community is pre-selected via query parameter
+        if ($request->has('community')) {
+            $selectedCommunity = Community::query()->where('subforum', $request->get('community'))->first();
+        }
+
+        return view('post-create', [
+            'communities' => $communities,
+            'selectedCommunity' => $selectedCommunity,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): void
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $request->validate([
+            'title' => ['required', 'string', 'max:300'],
+            'body' => ['nullable', 'string', 'max:10000'],
+            'community_id' => ['required', 'exists:communities,id'],
+        ]);
+
+        $post = Post::query()->create([
+            'title' => $request->title,
+            'slug' => $this->generateUniqueSlug($request->title),
+            'body' => $request->body,
+            'user_id' => Auth::id(),
+            'community_id' => $request->community_id,
+        ]);
+
+        return redirect()->route('post.show', $post->slug)
+            ->with('success', 'Post criado com sucesso!');
     }
 
     /**
@@ -119,5 +147,22 @@ final class PostController extends Controller
         $post->downvote();
 
         return back();
+    }
+
+    /**
+     * Generate a unique slug for the post.
+     */
+    private function generateUniqueSlug(string $title): string
+    {
+        $baseSlug = Str::slug($title);
+        $slug = $baseSlug;
+        $counter = 1;
+
+        while (Post::query()->where('slug', $slug)->exists()) {
+            $slug = $baseSlug.'-'.$counter;
+            $counter++;
+        }
+
+        return $slug;
     }
 }

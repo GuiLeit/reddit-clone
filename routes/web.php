@@ -24,6 +24,14 @@ Route::prefix('c')->group(function (): void {
 });
 
 Route::prefix('p')->group(function (): void {
+    Route::get('/create', [PostController::class, 'create'])
+        ->middleware(['auth'])
+        ->name('post.create');
+
+    Route::post('/store', [PostController::class, 'store'])
+        ->middleware(['auth'])
+        ->name('post.store');
+
     Route::get('/{post:slug}', [PostController::class, 'show'])->name('post.show');
 
     Route::post('/downvote/{post:slug}', [PostController::class, 'downvote'])

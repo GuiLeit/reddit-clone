@@ -44,7 +44,7 @@ declare(strict_types=1);
             </a>
 
             <a
-                href="{{ route('filament.admin.resources.posts.create') }}"
+                href="{{ route('post.create') }}"
                 class="text-text-medium hover:text-text-high hover:bg-elevation-02dp flex items-center space-x-3 rounded-lg px-3 py-2 transition-colors"
             >
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

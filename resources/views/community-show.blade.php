@@ -105,7 +105,7 @@ declare(strict_types=1);
                                 @endif
 
                                 <a
-                                    href="{{ route('filament.admin.resources.posts.create') }}"
+                                    href="{{ route('post.create', ['community' => $community->subforum]) }}"
                                     class="button-primary whitespace-nowrap"
                                 >
                                     Criar post
