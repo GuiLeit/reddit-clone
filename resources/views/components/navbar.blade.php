@@ -4,23 +4,41 @@ declare(strict_types=1);
 
 ?>
 
+@props(['myCommunities' => collect(), 'showMyCommunities' => false])
+
 <header class="bg-elevation-01dp border-outline-dark sticky top-0 z-50 border-b">
     <div class="px-4 sm:px-6 lg:px-8">
-        <div class="flex h-16 items-center justify-end">
-            <!-- Right side actions -->
+        <div class="flex h-16 items-center justify-between">
+            <!-- Left side: Logo and Mobile Menu -->
             <div class="flex items-center space-x-4">
-                <!-- Mobile search button -->
-                <button class="text-icon-medium hover:text-icon-high p-2 md:hidden">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <!-- Mobile menu button - ONLY on mobile -->
+                <button
+                    @click="sidebarOpen = !sidebarOpen"
+                    class="text-icon-medium hover:text-icon-high p-2 lg:hidden"
+                    aria-label="Toggle sidebar"
+                >
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            d="M4 6h16M4 12h16M4 18h16"
                         ></path>
                     </svg>
                 </button>
 
+                <!-- Logo - hidden on large screens since sidebar will show it -->
+                <div class="flex items-center space-x-2 lg:hidden">
+                    <div class="bg-helper-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                        <span class="text-sm font-bold text-white">3P</span>
+                    </div>
+                    <span class="text-text-high hidden font-semibold sm:block">3Pontos</span>
+                    <span class="text-text-medium hidden text-sm sm:block">Community</span>
+                </div>
+            </div>
+
+            <!-- Right side actions -->
+            <div class="flex items-center space-x-4">
                 <!-- Theme toggle -->
                 <button
                     onclick="toggleTheme()"

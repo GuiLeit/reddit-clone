@@ -10,7 +10,7 @@ declare(strict_types=1);
     'totalComments' => null,
 ])
 <section id="feed">
-    <div class="px-6 py-8">
+    <div class="px-4 py-6 sm:px-6 sm:py-8">
         @auth
             <!-- Page Title -->
             <div class="mb-8">

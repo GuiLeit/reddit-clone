@@ -5,13 +5,40 @@ declare(strict_types=1);
 ?>
 
 @props(['myCommunities' => collect(), 'showMyCommunities' => false])
+
+<!-- Mobile overlay backdrop -->
+<div
+    x-show="sidebarOpen"
+    x-transition:enter="transition-opacity duration-300 ease-linear"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition-opacity duration-300 ease-linear"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    @click="sidebarOpen = false"
+    class="bg-opacity-50 fixed inset-0 z-40 bg-black lg:hidden"
+></div>
+
+<!-- Sidebar -->
 <aside
-    class="bg-elevation-01dp border-outline-dark fixed top-0 left-0 z-[60] min-h-screen w-64 overflow-y-auto border-r"
+    class="bg-elevation-01dp border-outline-dark fixed top-16 left-0 z-50 h-[calc(100vh-4rem)] w-64 overflow-y-auto border-r transition-transform duration-300 ease-in-out lg:top-0 lg:z-40 lg:h-screen lg:translate-x-0"
+    :class="{
+        'translate-x-0': sidebarOpen || window.innerWidth >= 1024,
+        '-translate-x-full': !sidebarOpen && window.innerWidth < 1024
+    }"
+    x-show="sidebarOpen || window.innerWidth >= 1024"
+    @click.away="if (window.innerWidth < 1024) sidebarOpen = false"
 >
     <div class="p-4">
-        <!-- User Info Section -->
-        <div class="mb-6">
-            <div class="text-text-medium mb-2 text-sm">Lorem Ipsum</div>
+        <!-- Logo - Only visible on desktop -->
+        <div class="mb-6 hidden lg:block">
+            <div class="flex items-center space-x-2">
+                <div class="bg-helper-primary flex h-8 w-8 items-center justify-center rounded-lg">
+                    <span class="text-sm font-bold text-white">3P</span>
+                </div>
+                <span class="text-text-high font-semibold">3Pontos</span>
+                <span class="text-text-medium text-sm">Community</span>
+            </div>
         </div>
 
         <!-- Main Navigation -->
