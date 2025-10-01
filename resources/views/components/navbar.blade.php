@@ -128,12 +128,13 @@ declare(strict_types=1);
                         </div>
                     </div>
                 @else
-                    <a
-                        href="{{ route('filament.admin.auth.login') }}"
-                        class="bg-helper-primary hover:bg-helper-primary-hover focus:ring-helper-primary-focus rounded-md px-3.5 py-2.5 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none"
-                    >
-                        Log in
-                    </a>
+                    <!-- Guest user buttons -->
+                    <div class="flex items-center space-x-3">
+                        <!-- Login Button -->
+                        <a href="{{ route('filament.admin.auth.login') }}" class="button-secundary">Entrar</a>
+                        <!-- Register Button -->
+                        <a href="{{ route('filament.admin.auth.register') }}" class="button-primary">Registrar</a>
+                    </div>
                 @endauth
             </div>
         </div>

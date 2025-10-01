@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 <!-- Sidebar -->
 <aside
-    class="bg-elevation-01dp border-outline-dark fixed top-16 left-0 z-50 h-[calc(100vh-4rem)] w-64 overflow-y-auto border-r transition-transform duration-300 ease-in-out lg:top-0 lg:z-40 lg:h-screen lg:translate-x-0"
+    class="bg-elevation-01dp border-outline-dark fixed top-16 left-0 z-50 h-[calc(100vh-4rem)] w-64 overflow-y-auto border-r pt-14 transition-transform duration-300 ease-in-out lg:top-0 lg:z-40 lg:h-screen lg:translate-x-0"
     :class="{
         'translate-x-0': sidebarOpen || window.innerWidth >= 1024,
         '-translate-x-full': !sidebarOpen && window.innerWidth < 1024
@@ -30,17 +30,6 @@ declare(strict_types=1);
     @click.away="if (window.innerWidth < 1024) sidebarOpen = false"
 >
     <div class="p-4">
-        <!-- Logo - Only visible on desktop -->
-        <div class="mb-6 hidden lg:block">
-            <div class="flex items-center space-x-2">
-                <div class="bg-helper-primary flex h-8 w-8 items-center justify-center rounded-lg">
-                    <span class="text-sm font-bold text-white">3P</span>
-                </div>
-                <span class="text-text-high font-semibold">3Pontos</span>
-                <span class="text-text-medium text-sm">Community</span>
-            </div>
-        </div>
-
         <!-- Main Navigation -->
         <nav class="mb-8 space-y-1">
             <a
@@ -84,7 +73,7 @@ declare(strict_types=1);
         <!-- Communities Section -->
         @auth
             <div>
-                <h3 class="text-text-medium mb-3 text-sm font-medium tracking-wide uppercase">Minhas comunidades</h3>
+                <h3 class="text-text-medium mb-3 text-sm font-medium tracking-wide">Minhas comunidades</h3>
 
                 @if ($myCommunities->isNotEmpty())
                     <nav class="space-y-1">
